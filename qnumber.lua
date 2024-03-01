@@ -146,12 +146,11 @@ end
 function QNumber.__div(a, b)
   a, b, Q = QNumber.utils.sameQ(a, b)
   local res = a.val << Q
-  local zero = QNumber.zero(Q)
 
-  if (res >= zero and b.val >= zero) or (res < zero and b.val < zero) then
-    res = res + b.val / QNumber.fromNumber(2, Q)
+  if (res >= 0 and b.val >= 0) or (res < 0 and b.val < 0) then
+    res = res + b.val / 2
   else
-    res = res - b.val / QNumber.fromNumber(2, Q)
+    res = res - b.val / 2
   end
 
   return QNumber:new(
