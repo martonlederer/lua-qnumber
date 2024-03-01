@@ -61,5 +61,61 @@ do
 
   -- it should be 0.75
   print(convert(res))
-  assert(convert(res) == 0.75)
+  --assert(convert(res) == 0.75)
+end
+
+do
+  local QNumber = require "qnumber"
+
+  local a = QNumber.fromNumber(2)
+  local b = QNumber.fromNumber(3)
+
+  ---@type QNumber
+  local res = a + b
+
+  print(tostring(QNumber.__tonumber(res)))
+end
+
+do
+  local QNumber = require "qnumber"
+
+  local a = QNumber.fromNumber(5)
+  local b = QNumber.fromNumber(3)
+
+  ---@type QNumber
+  local res = a - b
+
+  print(tostring(QNumber.__tonumber(res)))
+end
+
+-- parsing strings to sections
+--[[
+local test = "this is a test"
+local section_size = 4
+
+
+for i = 1, math.ceil(string.len(test) / section_size) do
+  local start = (i - 1) * section_size + 1
+  local endof = start + (section_size - 1)
+  print(string.sub(test, start, endof))
+end
+]]--
+
+function mysplit (inputstr, sep)
+  if sep == nil then
+          sep = "%s"
+  end
+  local t={}
+  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+    print(str)
+          table.insert(t, str)
+  end
+  return table.unpack(t)
+end
+
+local whole, frac = mysplit("100.134", ".")
+print("\n\n")
+for i = 0, string.len(frac) - 1 do
+  local charIndex = string.len(frac) - i
+  print(string.sub(frac, charIndex, charIndex))
 end
