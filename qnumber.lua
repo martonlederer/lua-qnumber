@@ -58,15 +58,31 @@ function QNumber.fromString(t, Q)
     local endof = start + (MAX_DIGITS - 1)
 
     local val = tonumber(string.sub(t, start, endof))
-    local mul = QNumber.fromNumber(d)
+    local mul = QNumber.fromNumber(d, Q)
 
-    instance = instance + QNumber.fromNumber(val or 0) * mul
+    instance = instance + QNumber.fromNumber(val or 0, Q) * mul
     d = d + MAX_DIGITS
   end
 
   -- TODO: fractional numbers
 
   return instance
+end
+
+-- Shortcuts
+
+-- Shortcut to zero
+---@param Q? number
+---@return QNumber
+function QNumber.zero(Q)
+  return QNumber.fromNumber(0, Q)
+end
+
+-- Shortcut to one
+---@param Q? number
+---@return QNumber
+function QNumber.one(Q)
+  return QNumber.fromNumber(0, Q)
 end
 
 -- Convert a QNumber to a different notation
@@ -106,6 +122,40 @@ function QNumber.__sub(a, b)
 
   return QNumber:new(
     a.val - b.val,
+    Q
+  )
+end
+
+-- Multiply QNumber a by QNumber b
+---@param a QNumber
+---@param b QNumber
+---@return QNumber
+function QNumber.__mul(a, b)
+  a, b, Q = QNumber.utils.sameQ(a, b)
+
+  return QNumber:new(
+    ((a.val * b.val) + a.K) >> Q,
+    Q
+  )
+end
+
+-- Divide a QNumber by another QNumber
+---@param a QNumber
+---@param b QNumber
+---@return QNumber
+function QNumber.__div(a, b)
+  a, b, Q = QNumber.utils.sameQ(a, b)
+  local res = a.val << Q
+  local zero = QNumber.zero(Q)
+
+  if (res >= zero and b.val >= zero) or (res < zero and b.val < zero) then
+    res = res + b.val / QNumber.fromNumber(2, Q)
+  else
+    res = res - b.val / QNumber.fromNumber(2, Q)
+  end
+
+  return QNumber:new(
+    res / b.val,
     Q
   )
 end
@@ -183,9 +233,9 @@ end
 ---@return ...
 function QNumber.utils.ensure(...)
   ---@type unknown[]
-  local numbers = {}
+  local numbers = {...}
 
-  for k, v in numbers do
+  for k, v in ipairs(numbers) do
     if not QNumber.utils.isQNumber(v) then
       numbers[k] = QNumber.fromNumber(tonumber(v) or 0)
     end
