@@ -7,11 +7,15 @@ local function convert(val)
   return val / 2 ^ n
 end
 
+local function encode(val)
+  return val * 2 ^ n
+end
+
 -- 1.5 represented in Q notation
-local val1 = 384
+local val1 = encode(1.5)
 
 -- 2 represented in Q notation
-local val2 = 512
+local val2 = encode(2)
 
 -- test addition
 do
@@ -56,5 +60,6 @@ do
   local res = a / b
 
   -- it should be 0.75
+  print(convert(res))
   assert(convert(res) == 0.75)
 end
