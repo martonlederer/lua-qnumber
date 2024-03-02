@@ -122,3 +122,16 @@ do
 
   print(QNumber.__tonumber(x ^ 2))
 end
+
+do
+  local x = QNumber.fromNumber(6)
+
+  print(QNumber.__tonumber(-x))
+end
+
+do
+  local x = QNumber.fromNumber(1.7)
+  local y = QNumber.fromNumber(1)
+
+  print(QNumber.__tonumber(x % y))
+end

@@ -158,6 +158,29 @@ function QNumber.__pow(x, y)
   return res
 end
 
+-- Negation
+---@param x QNumber
+---@return QNumber
+function QNumber.__unm(x)
+  return QNumber:new(
+    -x.val,
+    x.Q
+  )
+end
+
+-- Modulo operation
+---@param x QNumber
+---@param y QNumber
+---@return QNumber
+function QNumber.__mod(x, y)
+  x, y, Q = QNumber.utils.sameQ(x, y)
+
+  return QNumber:new(
+    x.val % y.val,
+    Q
+  )
+end
+
 -- Equation operators
 
 -- Equals operator
