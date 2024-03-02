@@ -240,6 +240,25 @@ end
 ---@return string
 function QNumber.__tostring(x)
   -- TODO
+  return "hi"
+end
+
+-- Misc
+
+-- Concat two QNumbers as strings
+--- @param x QNumber|any
+--- @param y QNumber|any
+---@return string
+function QNumber.__concat(x, y)
+  if QNumber.utils.isQNumber(x) then
+    x = QNumber.__tostring(x)
+  end
+
+  if QNumber.utils.isQNumber(y) then
+    y = QNumber.__tostring(y)
+  end
+
+  return x .. y
 end
 
 -- utilities
