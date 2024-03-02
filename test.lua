@@ -105,3 +105,14 @@ do
 
   print(tostring(QNumber.__tonumber(res)))
 end
+
+do
+  local a = QNumber.fromNumber(17)
+  local b = QNumber.fromNumber(14)
+  local c = QNumber.fromNumber(14)
+
+  assert((a == b) == false)
+  assert(b < a)
+  assert(b <= c)
+  assert((a < b) == false)
+end

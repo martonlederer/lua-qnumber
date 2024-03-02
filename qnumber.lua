@@ -159,6 +159,38 @@ function QNumber.__div(a, b)
   )
 end
 
+-- Equation operators
+
+-- Equals operator
+---@param a QNumber
+---@param b QNumber
+---@return boolean
+function QNumber.__eq(a, b)
+  a, b = QNumber.utils.sameQ(a, b)
+
+  return a.val == b.val
+end
+
+-- Lower than operator
+---@param a QNumber
+---@param b QNumber
+---@return boolean
+function QNumber.__lt(a, b)
+  a, b = QNumber.utils.sameQ(a, b)
+
+  return a.val < b.val
+end
+
+-- Less equal operator
+---@param a QNumber
+---@param b QNumber
+---@return boolean
+function QNumber.__le(a, b)
+  a, b = QNumber.utils.sameQ(a, b)
+
+  return a.val <= b.val
+end
+
 -- Conversion
 
 -- Convert a QNumber to a number
