@@ -44,29 +44,10 @@ end
 ---@param Q? number Notation (8 by default)
 ---@return QNumber
 function QNumber.fromString(t, Q)
-  local instance = QNumber.fromNumber(0, Q)
-
-  -- maximum digits that can be parsed
-  local MAX_DIGITS = 12
-  local whole, frac = QNumber.utils.split(t, ".")
-
-  local d = 0
-
-  -- add whole numbers
-  for i = 1, math.ceil(string.len(whole) / MAX_DIGITS) do
-    local start = (i - 1) * MAX_DIGITS + 1
-    local endof = start + (MAX_DIGITS - 1)
-
-    local val = tonumber(string.sub(t, start, endof))
-    local mul = QNumber.fromNumber(d, Q)
-
-    instance = instance + QNumber.fromNumber(val or 0, Q) * mul
-    d = d + MAX_DIGITS
-  end
-
-  -- TODO: fractional numbers
-
-  return instance
+  return QNumber.fromNumber(
+    tonumber(t) or 0,
+    Q
+  )
 end
 
 -- Shortcuts
@@ -147,16 +128,34 @@ function QNumber.__div(a, b)
   a, b, Q = QNumber.utils.sameQ(a, b)
   local res = a.val << Q
 
-  if (res >= 0 and b.val >= 0) or (res < 0 and b.val < 0) then
-    res = res + b.val / 2
+  if ((res >> 31) & 1) == ((b.val >> 15) & 1) then
+    res = res + (b.val >> 1)
   else
-    res = res - b.val / 2
+    res = res - (b.val >> 1)
   end
 
   return QNumber:new(
     res / b.val,
     Q
   )
+end
+
+-- Exponential operation
+---@param x QNumber
+---@param y number
+---@return QNumber
+function QNumber.__pow(x, y)
+  if y == 0 then
+    return QNumber.one(x.Q)
+  end
+
+  local res = x
+
+  for _ = 2, y do
+    res = res * x
+  end
+
+  return res
 end
 
 -- Equation operators

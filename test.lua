@@ -116,3 +116,9 @@ do
   assert(b <= c)
   assert((a < b) == false)
 end
+
+do
+  local x = QNumber.fromNumber(2)
+
+  print(QNumber.__tonumber(x ^ 2))
+end
