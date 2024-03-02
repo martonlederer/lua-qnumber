@@ -30,7 +30,7 @@ function QNumber.fromNumber(t, Q)
   if not Q then Q = 8 end
 
   return QNumber:new(
-    (t or 0) * 2 ^ Q,
+    (t or 0) * (1 << Q),
     Q
   )
 end
@@ -66,7 +66,7 @@ end
 
 -- Convert a QNumber to a different notation
 ---@param t QNumber Number to convert
----@param Q number Notation
+---@param Q number Notation to convert to
 ---@return QNumber
 function QNumber.convert(t, Q)
   local notationDiff = Q - t.Q
@@ -263,6 +263,17 @@ function QNumber.__le(a, b)
   return a.val <= b.val
 end
 
+-- Calculate the square root of a QNumber
+-- Note: you will loose precision
+---@param x QNumber
+---@return QNumber
+function QNumber.sqrt(x)
+  return QNumber.fromNumber(
+    math.sqrt(QNumber.tonumber(x)),
+    x.Q
+  )
+end
+
 -- Conversion
 
 -- Convert a QNumber to a number
@@ -270,7 +281,7 @@ end
 ---@param x QNumber
 ---@return number
 function QNumber.tonumber(x)
-  return x.val / 2 ^ x.Q
+  return x.val / (1 << x.Q)
 end
 
 -- Split string between a character

@@ -149,3 +149,9 @@ do
 
   print(x .. y)
 end
+
+do
+  local x = QNumber.fromNumber(4)
+
+  print(QNumber.tonumber(QNumber.sqrt(x)))
+end
