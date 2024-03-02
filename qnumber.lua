@@ -128,10 +128,11 @@ function QNumber.__div(a, b)
   a, b, Q = QNumber.utils.sameQ(a, b)
   local res = a.val << Q
 
-  if ((res >> 31) & 1) == ((b.val >> 15) & 1) then
-    res = res + (b.val >> 1)
+  -- we can't use shifting here because of the way Lua handles negative numbers
+  if (res >= 0 and b.val >= 0) or (res < 0 and b.val < 0) then
+    res = res + b.val / 2
   else
-    res = res - (b.val >> 1)
+    res = res - b.val / 2
   end
 
   return QNumber:new(
