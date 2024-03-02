@@ -181,6 +181,16 @@ function QNumber.__mod(x, y)
   )
 end
 
+-- Floor division
+---@param x QNumber
+---@param y QNumber
+---@return QNumber
+function QNumber.__idiv(x, y)
+  x, y, Q = QNumber.utils.sameQ(x, y)
+
+  return (x - (x % y)) / y
+end
+
 -- Equation operators
 
 -- Equals operator

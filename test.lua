@@ -135,3 +135,10 @@ do
 
   print(QNumber.__tonumber(x % y))
 end
+
+do
+  local x = QNumber.fromNumber(5)
+  local y = QNumber.fromNumber(-2)
+
+  print(QNumber.__tonumber(x // y))
+end
