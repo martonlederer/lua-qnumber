@@ -73,7 +73,7 @@ do
   ---@type QNumber
   local res = a + b
 
-  print(tostring(QNumber.__tonumber(res)))
+  print(tostring(QNumber.tonumber(res)))
 end
 
 do
@@ -83,7 +83,7 @@ do
   ---@type QNumber
   local res = a - b
 
-  print(tostring(QNumber.__tonumber(res)))
+  print(tostring(QNumber.tonumber(res)))
 end
 
 do
@@ -93,7 +93,7 @@ do
   ---@type QNumber
   local res = a * b
 
-  print(tostring(QNumber.__tonumber(res)))
+  print(tostring(QNumber.tonumber(res)))
 end
 
 do
@@ -103,7 +103,7 @@ do
   ---@type QNumber
   local res = a / b
 
-  print(tostring(QNumber.__tonumber(res)))
+  print(tostring(QNumber.tonumber(res)))
 end
 
 do
@@ -120,27 +120,27 @@ end
 do
   local x = QNumber.fromNumber(2)
 
-  print(QNumber.__tonumber(x ^ 2))
+  print(QNumber.tonumber(x ^ 2))
 end
 
 do
   local x = QNumber.fromNumber(6)
 
-  print(QNumber.__tonumber(-x))
+  print(QNumber.tonumber(-x))
 end
 
 do
   local x = QNumber.fromNumber(1.7)
   local y = QNumber.fromNumber(1)
 
-  print(QNumber.__tonumber(x % y))
+  print(QNumber.tonumber(x % y))
 end
 
 do
   local x = QNumber.fromNumber(5)
   local y = QNumber.fromNumber(-2)
 
-  print(QNumber.__tonumber(x // y))
+  print(QNumber.tonumber(x // y))
 end
 
 do
