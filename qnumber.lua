@@ -61,7 +61,7 @@ end
 ---@param Q? number
 ---@return QNumber
 function QNumber.one(Q)
-  return QNumber.fromNumber(0, Q)
+  return QNumber.fromNumber(1, Q)
 end
 
 -- Convert a QNumber to a different notation
